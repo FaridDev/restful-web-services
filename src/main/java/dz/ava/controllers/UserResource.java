@@ -1,8 +1,12 @@
 package dz.ava.controllers;
 
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.*;
+
 import dz.ava.domaine.User;
 import dz.ava.exception.UserNotFoundException;
 import dz.ava.services.UserService;
+import org.springframework.hateoas.Resource;
+import org.springframework.hateoas.mvc.ControllerLinkBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -26,12 +30,17 @@ public class UserResource {
     }
 
     @GetMapping("/users/{id}")
-    public User getUser(@PathVariable Integer id) {
+    public Resource<User> getUser(@PathVariable Integer id) {
         User user = userService.findOne(id);
         if(user == null){
             throw new UserNotFoundException("id-" + id);
         }
-        return user;
+
+        Resource<User> resource = new Resource<>(user);
+        ControllerLinkBuilder linkTo = linkTo(methodOn(this.getClass()).getAllUsers());
+        resource.add(linkTo.withRel("all-users"));
+
+        return resource;
     }
 
     @PostMapping("/users")
