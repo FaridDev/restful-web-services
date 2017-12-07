@@ -1,4 +1,4 @@
-package dz.ava.controllers;
+package dz.ava.resources;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.*;
 
@@ -30,7 +30,7 @@ public class UserResource {
     }
 
     @GetMapping("/users/{id}")
-    public User getUser(@PathVariable Integer id) {
+    public Resource<User> getUser(@PathVariable Integer id) {
         User user = userService.findOne(id);
         if(user == null){
             throw new UserNotFoundException("id-" + id);
@@ -40,7 +40,7 @@ public class UserResource {
         ControllerLinkBuilder linkTo = linkTo(methodOn(this.getClass()).getAllUsers());
         resource.add(linkTo.withRel("all-users"));
 
-        return user;
+        return resource;
     }
 
     @PostMapping("/users")
