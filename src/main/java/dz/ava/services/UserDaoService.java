@@ -1,14 +1,14 @@
-package dz.ava.dao;
+package dz.ava.services;
 
 import dz.ava.domaine.User;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@Component
-public class UserDaoService {
+@Service
+public class UserDaoService implements UserService{
 
     private static List<User> users = new ArrayList<>();
     private static int usersCount = 3;
@@ -19,11 +19,11 @@ public class UserDaoService {
         users.add(new User(3, "Jack", new Date()));
     }
 
-    public static List<User> getUsers() {
+    public List<User> getUsers() {
         return users;
     }
 
-    public User findOne(int id) {
+    public User findOne(Integer id) {
         return users.stream().filter(user -> user.getId().equals(id)).findFirst().orElse(null);
     }
 
