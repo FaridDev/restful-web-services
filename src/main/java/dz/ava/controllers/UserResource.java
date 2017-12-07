@@ -1,6 +1,7 @@
 package dz.ava.controllers;
 
 import dz.ava.domaine.User;
+import dz.ava.exception.UserNotFoundException;
 import dz.ava.services.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,11 +11,11 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-public class UserController {
+public class UserResource {
 
     private final UserService userService;
 
-    public UserController(UserService userService) {
+    public UserResource(UserService userService) {
         this.userService = userService;
     }
 
@@ -25,7 +26,11 @@ public class UserController {
 
     @GetMapping("/users/{id}")
     public User getUser(@PathVariable Integer id) {
-        return userService.findOne(id);
+        User user = userService.findOne(id);
+        if(user == null){
+            throw new UserNotFoundException("id-" + id);
+        }
+        return user;
     }
 
     @PostMapping("/users")
