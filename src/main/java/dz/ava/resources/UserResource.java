@@ -5,6 +5,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.*;
 import dz.ava.domaine.User;
 import dz.ava.exception.UserNotFoundException;
 import dz.ava.services.UserService;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.mvc.ControllerLinkBuilder;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +21,7 @@ public class UserResource {
 
     private final UserService userService;
 
-    public UserResource(UserService userService) {
+    public UserResource(@Qualifier("userDaoService") UserService userService) {
         this.userService = userService;
     }
 
@@ -54,10 +55,6 @@ public class UserResource {
 
     @DeleteMapping("/users/{id}")
     public void deleteUser(@PathVariable int id){
-        User user = userService.deleteById(id);
-
-        if(user == null){
-            throw new UserNotFoundException("id-" + id);
-        }
+        userService.deleteById(id);
     }
 }

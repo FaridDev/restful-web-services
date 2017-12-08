@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-@Service
+@Service("userDaoService")
 public class UserDaoService implements UserService{
 
     private static List<User> users = new ArrayList<>();
@@ -36,15 +36,7 @@ public class UserDaoService implements UserService{
         return user;
     }
 
-    public User deleteById(int id){
-        Iterator<User> iterator = users.iterator();
-        while (iterator.hasNext()){
-            User user = iterator.next();
-            if(user.getId() == id){
-                iterator.remove();
-                return user;
-            }
-        }
-        return null;
+    public void deleteById(Integer id){
+        users.removeIf(user -> user.getId().equals(id));
     }
 }

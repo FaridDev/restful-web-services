@@ -1,8 +1,20 @@
 spring:
+  jpa:
+    show-sql: true
+  h2:
+    console:
+      enabled: true
   jackson:
     serialization:
       write-dates-as-timestamps: false
 
 management:
   security:
+    enabled: false
+
+security:
+  user:
+    name: username
+    password: password
+  basic:
     enabled: false
