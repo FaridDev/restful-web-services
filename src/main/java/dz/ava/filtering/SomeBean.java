@@ -1,4 +1,4 @@
-package dz.ava.domaine;
+package dz.ava.filtering;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
