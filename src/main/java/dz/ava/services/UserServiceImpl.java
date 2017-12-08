@@ -5,6 +5,7 @@ import dz.ava.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service("userServiceImpl")
 public class UserServiceImpl implements UserService {
@@ -22,7 +23,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findOne(Integer id) {
-        return userRepository.findOne(id);
+        Optional<User> optionalUser = userRepository.findById(id);
+        return optionalUser.orElse(null);
     }
 
     @Override
@@ -32,6 +34,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteById(Integer id) {
-        userRepository.delete(id);
+        userRepository.deleteById(id);
     }
 }
